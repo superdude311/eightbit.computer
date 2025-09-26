@@ -7,9 +7,6 @@
   <style type="text/css">
     body { margin:0; background:#000; color:#e6e6e6; font-family:"Times New Roman", Georgia, serif; }
     #wrap { width: 760px; margin: 0 auto; padding: 12px; }
-    a:link { color:#00ff66; text-decoration:none; }
-    a:visited { color:#66cc66; }
-    a:hover { text-decoration:underline; }
     h1 { margin: 12px 0 4px 0; }
     h2 { margin-top: 22px; }
     hr { height:1px; border:0; background:#444; }
@@ -17,14 +14,34 @@
     .nav a { padding: 0 6px; }
     .small { font-size:12px; color:#a0a0a0; }
     .box { background:#111; border:1px solid #444; padding:8px; }
+    /* === THEMES === */
+
+    /* Light: parchment tan */
+    body.theme-light { background:#f7d797; color:#2A2A2A; }
+    body.theme-light hr { background:#59380d; }
+    body.theme-light a:link { color:#0037C1; }
+    body.theme-light a:visited { color:#5A2C8A; }
+    body.theme-light a:hover { text-decoration: underline; }
+    body.theme-light .box { background:#FFF7E3; border-color:#59380d; }
+    body.theme-light .small { color:#5D5647; }
+    
+    /* Dark: terminal green */
+    body.theme-dark { background:#1d241b; color:#DDE8D5; }
+    body.theme-dark hr { background:#405e3a; }
+    body.theme-dark a:link { color:#2FD66A; }
+    body.theme-dark a:visited { color:#8BCF9A; }
+    body.theme-dark a:hover { text-decoration: underline; }
+    body.theme-dark .box { background:#151A15; border-color:#405e3a; }
+    body.theme-dark .small { color:#9BAA9E; }
+
   </style>
 </head>
-<body bgcolor="#000000" text="#e6e6e6" link="#00ff66" vlink="#66cc66" alink="#ffffff">
+<body class="theme-dark">
 <div id="wrap">
   <center>
     <h1>eightbit.computer</h1>
     <div class="nav">
-      [ <a href="#breadboard">Projects</a> ] [ <a href="#about">About</a> ] [ <a href="#contact">Contact</a> ]
+      [ <a href="#breadboard">Projects</a> ] [ <a href="#about">About</a> ] [ <a href="#contact">Contact</a> ] [ <a href="#" onclick="setTheme('light');return false;">Light</a> | <a href="#" onclick="setTheme('dark');return false;">Dark</a> ]
     </div>
   </center>
 
@@ -67,5 +84,20 @@
   <hr>
   <p class="small">© 2025 eightbit.computer — Last updated: 09/25/2025.</p>
 </div>
+<script type="text/javascript">
+(function(){
+  function apply(theme){
+    document.body.className = (theme === 'light') ? 'theme-light' : 'theme-dark';
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('theme'); } catch(e){}
+  var initial = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  apply(initial);
+  window.setTheme = function(t){
+    apply(t);
+    try { localStorage.setItem('theme', t); } catch(e){}
+  };
+})();
+</script>
 </body>
 </html>
